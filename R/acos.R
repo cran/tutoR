@@ -1,0 +1,2 @@
+"acos" <-
+.Primitive("acos")
