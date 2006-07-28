@@ -1,7 +1,7 @@
 
 .First.lib <- function(libname, pkgname) {
 cat("################################################\n")
-cat("##       Welcome to the R assist Package      ##\n")
+cat("##        Welcome to the tutoR Package        ##\n")
 cat("## For examples to help start off, Type: eg() ##\n")
 cat("################################################\n")
 }

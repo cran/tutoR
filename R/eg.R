@@ -15,7 +15,7 @@ function(func)
               "2) Control: eg(\"if\"), eg(\"for\")\n",
               "3) Examples using eg(funcname)\n",
               "4) Functions: eg(\"function\")\n",
-              "5) Functions: Deskcheck\n",
+              "5) Functions: deskcheck(func)\n",
               "6) Matrices: Working with,\n",
               "7) Plots: About,\n",
               "8) Plots: A demo\n",
@@ -48,8 +48,8 @@ function(func)
       if(.function.exists(funcname) & length(.find.owner(funcname))>0) {
         pkg <- .find.owner(funcname)
         if(length(pkg) > 1) {
-           cat(sep="", "Note: ", "'", funcname, "' may differ with: library(", 
-                    paste(sep=", library(", pkg[-1]), ")\n")
+           cat(sep="", "Note: '", funcname, "' may differ with: library(")
+           cat(sep="); library(", pkg); cat(")\n")
            pkg <- pkg[1]
         }
         path <- paste(sep="", .find.package(pkg),
