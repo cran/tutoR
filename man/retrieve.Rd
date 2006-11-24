@@ -1,59 +1,53 @@
 \name{retrieve}
 \alias{retrieve}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+\title{Mask of getAnywhere().}
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+After validation of input received, functionality
+of 'getAnywhere' is performed.
+When a required package is not already loaded,
+the user is prompted and the package loaded.
 }
 \usage{
 retrieve(x)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{ ~~Describe \code{x} here~~ }
+  \item{x}{a character string or name.}
 }
 \details{
-  ~~ If necessary, more details than the description above ~~
+A search is performed among all loaded packages.
+Upon the requested object not being found, a search
+is performed among all available packages.
+The User is then prompted for the relevant package to
+be loaded, before proceeding as with 'getAnywhere'.
+
 }
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
-}
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
+     An object of class '"getAnywhere"'.  This is a list with
+     components
 
- ~Make other sections like Warning with \section{Warning }{....} ~
+    \item{name}{the name searched for.}
+
+    \item{objs}{a list of objects found}
+
+   \item{where}{a character vector explaining where the object(s) were found}
+
+ \item{visible}{logical: is the object visible}
+
+    \item{dups}{logical: is the object identical to one earlier in the list.}
+
+
+     Normally the structure will be hidden by the 'print' method. There
+     is a '[' method to extract one or more of the objects found.
 }
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\seealso{ \code{\link{getAnywhere}} }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+data1 <- retrieve(cars)
 
-## The function is currently defined as
-function(x)
-{
-   funcname <- deparse(substitute(x))
-   if(substr(funcname,1,1) == "\"") funcname=x
-
-   if(funcname \%in\% .Control()) funcname <- "Control"
-   if(funcname \%in\% .Log()) funcname <- "Log"
-   if(funcname \%in\% .Trig()) funcname <- "Trig"
-   if(funcname == "tutoR") funcname <- "tutoR.package"
-
-   if(.function.exists(funcname) & length(.find.owner(funcname))>0) {
-      pkg <- .find.owner(funcname)
-      if(length(pkg) > 1) {
-         cat(sep="", "Note: ", "'", funcname, "' may differ with: library(",
-                  paste(sep=", library(", pkg[-1]), ")\n")
-         pkg <- pkg[1]
-      }
-      cat(funcname, "is in", pkg, "\n")
-   } else {}
-  }
+## If 'boot' Package not already loaded, getAnywhere could be unclear
+getAnywhere(acme)
+## But retrieve will locate and load the required package.
+data2 <- retrieve(acme)
 }
 \keyword{data}

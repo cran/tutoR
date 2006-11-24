@@ -1,32 +1,37 @@
 \name{eg}
 \alias{eg}
-\title{help with examples first}
+\alias{print.hsearch}
+\title{help with Examples first}
 \description{
-Scans help files to pick out first Sections: Examples, Description, and so on.
+Places \code{Examples} first and foremost in a help file.
 }
 \usage{
-eg(func)
+eg(topic)
 }
 \arguments{
-\item{}{With 'func' missing, eg() gives menu for examples to help start off.}
-\item{func}{Locates help file for 'func' (with all packages searched).
-            'func' may be quoted ("func") or unquoted.
-            "if", for example, syntax requires in (double) quotes.
-            More complete documentation, and options,
-            are available by using the 'help' command.
-            Upon 'func' not being located (then taking keyword='func'),
-            help.search("keyword") is automatically activated.}
+\item{}{With 'topic' missing, eg() provides a menu for examples to help start off.}
+\item{topic}{Locates help file for 'topic' (with all packages searched).
+            'topic' may be quoted ("topic") or unquoted.
+            With "if", for example, syntax requires (double) quotes.
+            Upon 'topic' not being located (and taking keyword 'topic'),
+            help.search("keyword") is automatically activated.
+            Complete documentation, and further options,
+            are available by using the \code{help} command.  }
 }
 \examples{
-eg(plot)                # Picks out 'Examples', then 'Desciption', 'Usage', etc.
 
-eg(bootstrap)		# Upon not finding a function 'bootstrap',
-			# related functions and packages are listed.
+eg()		## Display Menu for help getting started.
 
-eg(acme)		# Will instruct how to load the boot Package.
+eg(plot)	## plot help: 'Examples', 'Desciption', 'Usage', etc.
+
+eg(bootstrap)	## Upon not finding a function 'bootstrap',
+		## related functions and packages are listed.
+
+eg(acme)	## Instructs how to load the boot Package if not loaded.
+
 }
 \seealso{
 \code{\link{help}},
 \code{\link{help.search}}
 }
-\keyword{aplot}
+\keyword{documentation}

@@ -1,5 +1,5 @@
 \name{abs}
-\title{Miscellaneous Mathematical Functions}
+\title{Miscellaneous Mathematical Functions - tutoR masks}
 \usage{
 abs(x)
 sqrt(x)
@@ -19,6 +19,10 @@ sqrt(x)
   individually or via the \code{\link{Math}} group generic.  For complex
   arguments (and the default method), \code{z},
   \code{abs(z) == \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
+
+  \code{tutoR} masks offer validation of inputs received.  When an input object
+  is not found, appropriate suggestions are given, with an option
+  for correcting inputs.
 }
 \seealso{
   \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,

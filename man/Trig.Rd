@@ -7,11 +7,16 @@
 \alias{asin}
 \alias{atan}
 \alias{atan2}
-\title{Trigonometric Functions}
+\title{Trigonometric Functions - tutoR masks}
 \description{
-  These functions give the obvious trigonometric functions.  They
-  respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
+  These functions give the obvious trigonometric functions.
+  They respectively compute the cosine, sine, tangent, arc-cosine, arc-sine,
   arc-tangent, and the two-argument arc-tangent.
+
+  \code{tutoR} masks offer validation of inputs received.  When an input object
+  is not found, appropriate suggestions are given, with an option
+  for correcting inputs.  Additional information is provided,
+  such as dealing with angles in radians and appropriate conversions.
 }
 \usage{
 cos(x)

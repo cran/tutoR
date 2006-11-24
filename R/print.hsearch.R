@@ -15,8 +15,8 @@ function(x, ...)
 		       sep = "")
 	dbtit <- paste(db[ , "title"], sep = "")
 	writeLines(formatDL(dbnam, dbtit), outConn)
-        writeLines(c("\n\n", strwrap(paste("For help with 'func(pkg)',",
-                       "Try: eg(func)"))), 
+        writeLines(c("\n\n", strwrap(paste("For examples using 'funcname(package)',",
+                       "Type: eg(funcname)"))), 
                     outConn)
 	close(outConn)
 	file.show(outFile, delete.file = TRUE)

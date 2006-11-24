@@ -1,27 +1,32 @@
 \name{tutoR-internal}
 \title{Internal tutoR objects}
-\alias{.abs}
-\alias{.clean.html}
+\alias{.choose}
 \alias{.clearScreen}
 \alias{.Control}
-\alias{.eg.html}
-\alias{.exp}
+\alias{.assist.help}
+\alias{.assist.update}
+\alias{.dim}
+\alias{.Examples}
+\alias{.error}
+\alias{.execute}
 \alias{.extra.examples}
 \alias{.find.owner}
 \alias{.function.exists}
 \alias{.getexpr}
 \alias{.get.varnames}
-\alias{.is.num.expr}
-\alias{.Log.checkX}
+\alias{.is.numexpr}
 \alias{.Log}
 \alias{.match.varname}
 \alias{.Math}
+\alias{.menu}
+\alias{.get.posint}
 \alias{.plot.checkXY}
-\alias{.source}
-\alias{.sqrt}
-\alias{.Trig.checkX}
+\alias{.Reserved}
+\alias{.deletecall}
+\alias{.setcall}
 \alias{.Trig}
 \alias{.var.exists}
+\alias{.warning}
 \description{Internal tutoR objects.}
 \details{These are not to be called by the user.}
 \keyword{internal}

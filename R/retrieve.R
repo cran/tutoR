@@ -20,13 +20,11 @@ function(x)
    } else {
       pkg <- .find.owner(funcname)
       if(length(pkg) > 1) pkg <- pkg[1]
-      if(!is.null(pkg)) repeat{
-         cat(sep="", "Enter 1: To load required '", pkg, "' package; ",
-                     "Or 0: To Skip ")
-         choice <- NULL
-         choice <- try(eval(parse()))
-         if(choice == 1) { library(pkg, character.only = TRUE); break }
-         if(choice == 0) break
+      if(!is.null(pkg)) {
+         choice <- .choose(paste(sep="", "to Load the required '",
+                     pkg, "' package"), not=".", select=c("L", "l"),
+                     default="to Skip")
+         if(choice) library(pkg, character.only = TRUE)
       }
    }
 

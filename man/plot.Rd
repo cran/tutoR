@@ -1,5 +1,5 @@
 \name{plot}
-\title{Generic X-Y Plotting}
+\title{Generic X-Y Plotting - tutoR mask}
 \alias{plot}
 \usage{
 plot(x, y, \dots)
@@ -39,6 +39,11 @@ plot(x, y, \dots)
 \description{
   Generic function for plotting of \R objects.  For more details about
   the graphical parameter arguments, see \code{\link{par}}.
+
+  A \code{tutoR} mask offers validation of inputs received.  When an input object
+  is not found, appropriate suggestions are given, with an option
+  for correcting inputs.  Additional information is provided,
+  such as 'x' and 'y' variables as received, and some warnings on syntax.
 }
 \details{
   For simple scatter plots, \code{\link{plot.default}} will be used.
@@ -68,5 +73,6 @@ plot(table(rpois(100,5)), type = "h", col = "red", lwd=10, main="rpois(100,lambd
 ## Simple quantiles/ECDF, see ecdf() {library(stats)} for a better one:
 plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
 points(x, cex = .5, col = "dark red")
+
 }
 \keyword{hplot}

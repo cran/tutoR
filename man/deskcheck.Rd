@@ -1,17 +1,20 @@
-\name{debug}
+\name{deskcheck}
 \title{Deskcheck a function line-by-line}
 \usage{
-deskcheck(func, ...)
+deskcheck(.function)
 }
 \alias{deskcheck}
 \arguments{
-\item{func}{any user-defined \R function.}
-\item{...}{The function inputs required by 'func': input1, input2, ....}
+\item{.function}{any user-defined \R function.}
 }
 \description{
-  Utilizes the 'debug' flag and starts execution of a function, line-by-line.
+  Utilizes the 'debug' flag in line-by-line execution of a function.
 }
 \details{
+  \code{deskcheck} activates the \code{debug} flag before initiating
+  line-by-line execution of the function, \code{.function}.
+  Values are first requested for required arguments to \code{.function}.
+
   debug: When a function flagged for debugging is entered, normal execution
   is suspended and the body of function is executed one statement at a time.
   A new browser context is initiated for each step (and the previous one
@@ -39,14 +42,34 @@ deskcheck(func, ...)
   \code{\link{debug}}
 }
 \examples{
-   myfunc <- function(x, y)
-   { 
-      ANSWER <- 1
-      for(i in 0:(y-x)) ANSWER <- ANSWER * (y-i)
-      return(ANSWER) 
-   }
+## Sample function to locate a bug
+hanoi <- function(n)
+{ move <- function(pegs, p1, p2) {
+     n <- length(pegs[1,])
+     plot(3/n*(0:(n+1)), 0:(n+1), type="n", axes=F, xlab="", ylab="")
+     abline(v=c(1,2,3), h=0.5, lwd=3)
+     d1 <- sum(pegs[p1,]!=0); d2 <- sum(pegs[p2,]!=0)+1
+     pegs[p2, d2] <- pegs[p1, d1]; pegs[p1, d1] <- 0
+     for(i in 1:3) for(j in 1:n) {
+       disc <- ""
+       if(pegs[i,j] != 0) for(size in 1:p[i,j])
+         disc <- paste(sep="", disc, "#")
+       text(i, j, disc, adj=0.5, cex=2.0) }
+     return(pegs) }
+  n <- 5; p <- matrix(c(n:1,rep(0,2*n)), 3, byrow=T)
+  from <- 1; to=2; move(p, from, to)
+  from <- 1; to=3; move(p, from, to)
+  from <- 1; to=3; move(p, from, to)
+  from <- 1; to=2; move(p, from, to)
+  from <- 3; to=1; move(p, from, to)
+  from <- 3; to=2; move(p, from, to)
+}
 
-   # Then type: deskcheck(myfunc, 10, 5)
+\dontrun{
+
+deskcheck(hanoi)
+
+}
 }
 \keyword{programming}
 \keyword{environment}

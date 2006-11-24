@@ -1,7 +1,6 @@
 \name{tutoR.demo}
 \alias{tutoR.demo}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ Demonstration of the student Package }
+\title{ Demonstration of the tutoR Package }
 \description{
 Demonstrates how function masks are used to pick up and
 clarify bad inputs to the function before its execution.
@@ -11,7 +10,10 @@ are also demonstrated.
 \usage{
 tutoR.demo()
 }
+\seealso{
+\code{\link{demo}}
+}
 \examples{
-tutoR.demo()          # Or choose Menu Option 1: eg()
+tutoR.demo()   # Or simply choose eg() Menu Option 1
 }
 \keyword{utilities}

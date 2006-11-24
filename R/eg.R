@@ -1,104 +1,108 @@
 "eg" <-
-function(func)
-{  max.Examples.indent <- 7
+function(topic)
+{
    HELP <- TRUE
-   reserved <- c("if", "for", "function", "repeat", "tutoR", "while")
+   reserved <- c(.Reserved(), "tutoR")
 
 ### eg() HELP MENU
-   if(missing(func)) {
+   if(missing(topic)) {
       repeat{
 
          .clearScreen()
 
-         cat("Please select menu item for help.\n")
-         cat(" 1) A demo: tutoR Package\n",
-              "2) Control: eg(\"if\"), eg(\"for\")\n",
-              "3) Examples using eg(funcname)\n",
-              "4) Functions: eg(\"function\")\n",
-              "5) Functions: deskcheck(func)\n",
-              "6) Matrices: Working with,\n",
-              "7) Plots: About,\n",
-              "8) Plots: A demo\n",
-              "9) Exit eg()\n")
-
-         expr <- parse(prompt="Selection: ")
+         cat(sep="",
+              "  _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n",
+              "  _/  Please select item or 0 to exit Menu  _/\n",
+              "  _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n",
+              "  _/ 1) A demo of the tutoR Package         _/\n",
+              "  _/ 2) Examples using eg(topic)            _/\n",
+              "  _/ 3) eg(assist): Assist plot, matrix etc _/\n",
+              "  _/ 4) eg(\"function\"): Create a function   _/\n",
+              "  _/ 5) eg(deskcheck): Deskcheck a function _/\n",
+              "  _/ 6) If & Loops: eg(\"if\"), eg(\"for\")     _/\n",
+              "  _/ 7) plot demonstration: demo(graphics)  _/\n",
+              "  _/ 0) Exit Menu                           _/\n",
+              "  _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/\n")
+         cat("\n")
+         cat("\n")
          choice <- 0
-         choice <- try(eval(expr))
+         tries <- 0
+         repeat{ tries <- tries+1
+            warnings <- options("warn"); options(warn=-1)
+            input <- readline(prompt=" Your Selection: ")
+            try(choice <- as.double(input))
+            if(choice %in% 0:9) break
+            if(tries > 10) { choice <- 0; break }
+            cat(" Please select from: 1 - 9 or 0 to Exit.\n")
+            options(warnings)
+         }
 
-         if(is.numeric(choice))
          if(choice == 1) tutoR.demo() else
-         if(choice == 2) eg(Control) else
-         if(choice == 3) eg(eg) else
-         if(choice == 4) eg("function") else
-         if(choice == 5) eg(deskcheck) else
-         if(choice == 6) eg(matrix) else
-         if(choice == 7) eg(plot) else
-         if(choice == 8) { demo(graphics); graphics.off() } else
-         if(choice == 9) return(invisible(NULL))
+         if(choice == 2) print(eg(eg)) else
+         if(choice == 3) print(eg(assist)) else
+         if(choice == 4) print(eg("function")) else
+         if(choice == 5) print(eg(deskcheck)) else
+         if(choice == 6) print(eg(Control)) else
+         if(choice == 7) { demo(graphics); graphics.off() } else
+         if(choice == 0) return(invisible(NULL))
       }
    } else { ### eg(FUNCNAME)
-      funcname <- deparse(substitute(func))
-      if(substr(funcname,1,1) == "\"") funcname=func
+      if(substr(deparse(substitute(topic)),1,1) == "\"")
+        topicname <- topic else
+        topic <- deparse(substitute(topic))
 
-      if(funcname %in% .Control()) funcname <- "Control"
-      if(funcname %in% .Log()) funcname <- "Log"
-      if(funcname %in% .Trig()) funcname <- "Trig"
-      if(funcname == "tutoR") funcname <- "tutoR.package"
+      topicname <- deparse(substitute(topic))
+      if(substr(topicname,1,1) == "\"") topicname=topic
 
-      if(.function.exists(funcname) & length(.find.owner(funcname))>0) {
-        pkg <- .find.owner(funcname)
-        if(length(pkg) > 1) {
-           cat(sep="", "Note: '", funcname, "' may differ with: library(")
+      if(topicname %in% .Control()) topicname <- "Control"
+      if(topicname %in% .Log()) topicname <- "Log"
+      if(topicname %in% .Math()) topicname <- "Math"
+      if(topicname %in% .Trig()) topicname <- "Trig"
+      if(topicname == "tutoR") topicname <- "tutoR.package"
+      if (!is.na(match(topic, c("+", "-", "*", "/", "^", "%%"))))
+          topicname <- "Arithmetic" else
+      if (!is.na(match(topic, c("<", ">", "<=", ">=", "==", "!="))))
+          topicname <- "Comparison" else
+      if (!is.na(match(topic, c("[", "[[", "$"))))
+          topicname <- "Extract" else
+      if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
+          topicname <- "Logic" else if (!is.na(match(topic, c("%*%"))))
+          topicname <- "matmult"
+
+
+      if(.function.exists(topicname) & length(.find.owner(topicname))>0) {
+        pkg <- .find.owner(topicname)
+        if(length(pkg[pkg!="tutoR"]) > 1) {
+           cat(sep="", "Note: '", topicname, "' may differ with: library(")
            cat(sep="); library(", pkg); cat(")\n")
            pkg <- pkg[1]
         }
-        path <- paste(sep="", .find.package(pkg),
-                             "/html/", funcname, ".html")
+### EXTRACT 'Examples' FIRST FROM help()
+        return({ .Examples(topicname); invisible(NULL) })
 
-################### FIND ALTERNATIVE EXTRACTING FROM  HELP #############
-# helpfile <- readLines(paste(sep="",.find.package(pkg),"/help/", funcname))
-# show(paste(sep="\n", helpfile))
-########################################################################
-
-### OPEN tempfile FOR READING/WRITING
-        tempfile <- file(".studefile", "w+")
-        cat(sep="", "Examples \t\t", funcname, ": library(", pkg, ")\n", 
-                         file=tempfile)
-        cat("=========\n", file=tempfile)
-        .extra.examples(funcname, tempfile)
-        .eg.html(path, tempfile, max.Examples.indent)
-        close(tempfile)
-
-        tmp <- file(".temp", "w+")
-        txt <- readLines(".studefile")
-        for(i in 1:length(txt)) cat(sep="", txt[i], "\n", file=tmp)
-        close(tmp)
-        file.show(".temp")
-        unlink(".temp")
-
-        unlink(".studefile")
-      } else { # funcname NOT LOCATED
-        pkg <- .find.owner(funcname)
-        if(length(pkg) > 1) pkg <- pkg[1]
+      } else { # topicname NOT LOCATED
+        pkg <- .find.owner(topicname)
         if(is.null(pkg)) {
-           show(help.search(funcname)) 
+           show(help.search(topicname)) 
            HELP <- FALSE
         } else {
-           cat(sep="", "'", funcname, 
+           cat(sep="", "'", topicname, 
                 "' available with the ", pkg, " Package.\n")
            cat(sep="", "To load ", pkg[1], 
                   ", Type: library(", pkg[1], ")\n")
            HELP <- FALSE
         } 
+        if(length(pkg) > 1) pkg <- pkg[1]
       }
    }
 
    if(HELP) {
-      if(funcname %in% reserved) 
-         funcname <- paste(sep="", "\"", funcname, "\"")
-      cat(sep="", "For complete documentation, Type: help(", funcname, 
-                                           ")  OR  ?", funcname, "\n")
+      if(topicname %in% reserved) 
+         topicname <- paste(sep="", "\"", topicname, "\"")
+      cat(sep="", "For complete documentation, Type: help(", topicname, 
+                                           ")  OR  ?", topicname, "\n")
    }
+
    invisible(NULL)
 }
 
